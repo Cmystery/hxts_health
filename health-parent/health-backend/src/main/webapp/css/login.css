@@ -1,12 +1,12 @@
 html,body {
-	/* overflow-y: scroll; */
-	margin: 0;
+  /* overflow-y: scroll; */
+  margin: 0;
 }
 .login-container .input{
   display: inline-block;
-    height: 47px;
-    width: 85%;
-  
+  height: 47px;
+  width: 85%;
+
 }
 .login-container .input input {
   background: transparent;
@@ -30,8 +30,8 @@ html,body {
 .login-container .loginBox{
   height: 100%;
   width: 100%;
- background: url('./../img/logingBg.png') no-repeat 100% 100%;
- position: relative;
+  background: url('./../img/logingBg.png') no-repeat 100% 100%;
+  position: relative;
 }
 .login-container .loginBox .el-form-item__content{
   line-height: initial;
@@ -67,8 +67,8 @@ html,body {
 }
 .login-container .title-container {
   position: relative;
-  
-  
+
+
 }
 .login-container .title-container .title {
   font-size: 26px;
@@ -113,16 +113,16 @@ html,body {
   text-align: center;
 }
 .logoInfo span{
-	font-size: 22px;
-	padding: 0 10px;
+  font-size: 22px;
+  padding: 0 10px;
   display: inline-block;
-  
+
 }
 .logoInfo .logo{
-	background: url(../img/loginLogo.png) no-repeat;
-	display:inline-block;
-	width: 200px;
-	height: 30px;
+  background: url(../img/loginLogo.png) no-repeat;
+  display:inline-block;
+  width: 200px;
+  height: 30px;
   display: inline-block;
   vertical-align: middle;
 }

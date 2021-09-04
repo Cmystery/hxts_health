@@ -36,7 +36,6 @@ public class CheckItemServiceImpl implements CheckItemService {
         } finally {
              PageHelper.clearPage();
         }
-        // new PageResult(pageInfo.getTotal(),pageInfo.getResult());
-        return null;
+         return new PageResult(pageInfo.getTotal(),pageInfo.getList());
     }
 }
