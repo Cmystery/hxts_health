@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 体检检查项管理
  */
@@ -21,6 +24,11 @@ public class CheckItemController {
     @Reference
     private CheckItemService checkItemService;
 
+    /**
+     * 新增检查项
+     * @param checkItem 检查项
+     * @return
+     */
     @RequestMapping("/add")
     public Result add( CheckItem checkItem){
         try {
@@ -31,12 +39,85 @@ public class CheckItemController {
         return new Result(true,MessageConstant.ADD_CHECKITEM_SUCCESS);
     }
 
+    /**
+     * 检查项分页查询
+     * @param queryPageBean 查询封装
+     * @return
+     */
     @RequestMapping("/findPage")
-    public PageResult findPage(QueryPageBean queryPageBean){
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
+        int page = queryPageBean.getCurrentPage();
+        int size = queryPageBean.getPageSize();
         PageResult pageResult = checkItemService.pageQuery(
                 queryPageBean.getCurrentPage(),
                 queryPageBean.getPageSize(),
                 queryPageBean.getQueryString());
         return pageResult;
+    }
+
+    /**
+     * 删除
+     * @param id 检查项id
+     * @return
+     */
+    @RequestMapping("/delete")
+    public Result delete(Integer id){
+        try {
+            checkItemService.delete(id);
+        }catch (RuntimeException e){
+            return new Result(false,e.getMessage());
+        }catch (Exception e){
+            return new Result(false, MessageConstant.DELETE_CHECKITEM_FAIL);
+        }
+        return new Result(true,MessageConstant.DELETE_CHECKITEM_SUCCESS);
+    }
+
+    /**
+     * 检查项编辑
+     * @param checkItem
+     * @return
+     */
+    @RequestMapping("/edit")
+    public Result edit(@RequestBody CheckItem checkItem){
+        try{
+            checkItemService.edit(checkItem);
+        }catch (Exception e){
+            return new Result(false,MessageConstant.EDIT_CHECKITEM_FAIL);
+        }
+        return new Result(true,MessageConstant.EDIT_CHECKITEM_SUCCESS);
+    }
+
+    /**
+     * 查询检查项数据
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findById")
+    public Result findById(Integer id){
+        try{
+            CheckItem checkItem = checkItemService.findById(id);
+            return  new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS,checkItem);
+        }catch (Exception e){
+            e.printStackTrace();
+            //服务调用失败
+            return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
+        }
+    }
+
+
+    /**
+     * 检查项列表展示
+     * @return
+     */
+    @RequestMapping("/findAll")
+    public Result findAll() {
+        List<CheckItem> checkItemList = checkItemService.findAll();
+
+        if (checkItemList != null && checkItemList.size()>0){
+            Result result = new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS);
+            result.setData(checkItemList);
+            return result;
+        }
+        return new Result(false,MessageConstant.QUERY_CHECKITEM_FAIL);
     }
 }

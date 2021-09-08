@@ -38,4 +38,30 @@ public class CheckItemServiceImpl implements CheckItemService {
         }
          return new PageResult(pageInfo.getTotal(),pageInfo.getList());
     }
+
+    @Override
+    public void delete(Integer id) throws RuntimeException{
+        //查询当前检查项是否和检查组关联
+        long count = checkItemDao.findCountByCheckItemId(id);
+        if(count > 0){
+            //当前检查项被引用，不能删除
+            throw new RuntimeException("当前检查项被引用，不能删除");
+        }
+        checkItemDao.deleteById(id);
+    }
+
+    @Override
+    public void edit(CheckItem checkItem) {
+        checkItemDao.update(checkItem);
+    }
+
+    @Override
+    public CheckItem findById(Integer id) {
+        return checkItemDao.findById(id);
+    }
+
+    @Override
+    public List<CheckItem> findAll() {
+        return checkItemDao.selectByCondition(null);
+    }
 }

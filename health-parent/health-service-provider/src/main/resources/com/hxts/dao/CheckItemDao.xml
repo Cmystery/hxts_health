@@ -12,8 +12,54 @@
     <select id="selectByCondition" parameterType="string"
             resultType="com.hxts.pojo.CheckItem">
         select * from t_checkitem
-        <if test="value != null and value.length > 0">
-            where code = #{value} or name = #{value}
+        <if test="queryString != null and queryString.length > 0">
+            where code = #{queryString} or name = #{queryString}
         </if>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from t_checkitem where id = #{id}
+    </delete>
+
+    <select id="findCountByCheckItemId" parameterType="int" resultType="long">
+        select count(*) from t_checkgroup_checkitem
+         <if test="id != null">
+            where checkitem_id = #{id}
+         </if>
+    </select>
+
+    <update id="update" parameterType="com.hxts.pojo.CheckItem">
+        update t_checkitem
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" parameterType="int" resultType="com.hxts.pojo.CheckItem">
+        select * from t_checkitem where id = #{id}
     </select>
 </mapper>
