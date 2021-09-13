@@ -27,7 +27,6 @@ public class CheckItemServiceImpl implements CheckItemService {
     @Override
     public PageResult pageQuery(Integer currentPage, Integer pageSize, String queryString) {
 
-
         PageInfo<CheckItem>  pageInfo = null;
         try{
             PageHelper.startPage(currentPage,pageSize);

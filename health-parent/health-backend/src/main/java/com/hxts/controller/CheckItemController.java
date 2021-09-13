@@ -46,8 +46,6 @@ public class CheckItemController {
      */
     @RequestMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
-        int page = queryPageBean.getCurrentPage();
-        int size = queryPageBean.getPageSize();
         PageResult pageResult = checkItemService.pageQuery(
                 queryPageBean.getCurrentPage(),
                 queryPageBean.getPageSize(),
