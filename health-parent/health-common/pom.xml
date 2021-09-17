@@ -119,8 +119,8 @@
             <artifactId>jedis</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
+            <groupId>com.huaweicloud</groupId>
+            <artifactId>esdk-obs-java</artifactId>
         </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>
