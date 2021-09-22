@@ -65,4 +65,8 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="findAll" resultType="com.hxts.pojo.CheckGroup">
+        select * from t_checkgroup
+    </select>
 </mapper>
