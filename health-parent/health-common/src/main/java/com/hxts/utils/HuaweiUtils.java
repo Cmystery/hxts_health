@@ -1,6 +1,7 @@
 package com.hxts.utils;
 
 import com.obs.services.ObsClient;
+import com.obs.services.exception.ObsException;
 import com.obs.services.model.*;
 
 import java.io.ByteArrayInputStream;
@@ -83,9 +84,15 @@ public class HuaweiUtils {
      * @param fileName  需要删除的对象全名 例："site/20190817/localFile.sh"
      * @return
      */
-    public DeleteObjectResult deleteObject(String fileName) {
+    public static void deleteObject(String fileName) {
         ObsClient obsClient = new ObsClient(ak, sk, endpoint);
-        return obsClient.deleteObject(bucketName, fileName);
+        try {
+            obsClient.deleteObject(bucketName, fileName);
+        } catch (ObsException ex) {
+            //如果遇到异常，说明删除失败
+            System.err.println(ex.getErrorCode());
+            System.err.println(ex.getErrorMessage());
+        }
     }
 
 

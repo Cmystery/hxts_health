@@ -13,7 +13,6 @@ import java.io.IOException;
 public class POITest {
 
     //读取EXCEL
-    @Test
     public void test1() throws IOException {
         //创建工作簿
         XSSFWorkbook workbook = new XSSFWorkbook("F:\\poi.xlsx");
@@ -32,7 +31,6 @@ public class POITest {
     }
 
     //读取EXCEL
-    @Test
     public void test2() throws IOException {
         //创建工作簿
         XSSFWorkbook workbook = new XSSFWorkbook("F:\\poi.xlsx");
@@ -54,7 +52,6 @@ public class POITest {
     }
 
     //导出EXCEL
-    @Test
     public void test3() throws IOException {
         //在内存中创建一个Excel文件
         XSSFWorkbook workbook = new XSSFWorkbook();

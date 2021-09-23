@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.itheima.dao.OrderSettingDao" >
+<mapper namespace="com.hxts.dao.OrderSettingDao" >
     <!--新增-->
-    <insert id="add" parameterType="com.itheima.pojo.OrderSetting">
+    <insert id="add" parameterType="com.hxts.pojo.OrderSetting">
         insert into t_ordersetting
             (orderDate,number,reservations)
         values
             (#{orderDate},#{number},#{reservations})
     </insert>
     <!--根据日期更新预约人数-->
-    <update id="editNumberByOrderDate" parameterType="com.itheima.pojo.OrderSetting">
+    <update id="editNumberByOrderDate" parameterType="com.hxts.pojo.OrderSetting">
         update t_ordersetting set number = #{number} where orderDate = #{orderDate}
     </update>
     <!--根据预约日期查询-->
