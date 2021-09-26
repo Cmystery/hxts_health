@@ -3,6 +3,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hxts.dao.SetmealDao" >
 
+    <resultMap type="com.itheima.pojo.CheckGroup" id="baseResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+    </resultMap>
+    <resultMap type="com.itheima.pojo.CheckGroup"
+               id="findByIdResultMap"
+               extends="baseResultMap">
+        <collection property="checkItems"
+                    javaType="ArrayList"
+                    ofType="com.itheima.pojo.CheckItem"
+                    column="id"
+                    select="com.itheima.dao.CheckItemDao.findCheckItemById">
+        </collection>
+    </resultMap>
+
     <!--新增-->
     <insert id="add" parameterType="com.hxts.pojo.Setmeal">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
@@ -28,5 +48,17 @@
         <if test="value != null and value.length > 0">
             where code = #{value} or name = #{value} or helpCode = #{value}
         </if>
+    </select>
+
+    <select id="findAll" resultType="com.hxts.pojo.Setmeal">
+        select * from t_setmeal
+    </select>
+
+    <select id="findById" resultType="com.hxts.pojo.Setmeal">
+        select * from t_setmeal  where id=#{id}
+        select t_setmeal.*, t_checkgroup.*
+        from t_setmeal
+                 left join t_setmeal_checkgroup on t_setmeal.id= t_setmeal_checkgroup.setmeal_id
+                 join t_checkgroup on t_setmeal_checkgroup.setmeal_id=t_checkgroup.id
     </select>
 </mapper>
