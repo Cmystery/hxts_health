@@ -3,23 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hxts.dao.SetmealDao" >
 
-    <resultMap type="com.itheima.pojo.CheckGroup" id="baseResultMap">
+    <resultMap type="com.hxts.pojo.Setmeal" id="baseResultMap">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="code" property="code"/>
         <result column="helpCode" property="helpCode"/>
         <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
         <result column="remark" property="remark"/>
         <result column="attention" property="attention"/>
-    </resultMap>
-    <resultMap type="com.itheima.pojo.CheckGroup"
-               id="findByIdResultMap"
-               extends="baseResultMap">
-        <collection property="checkItems"
-                    javaType="ArrayList"
-                    ofType="com.itheima.pojo.CheckItem"
-                    column="id"
-                    select="com.itheima.dao.CheckItemDao.findCheckItemById">
+        <result column="img" property="img"/>
+        <collection property="checkGroups" javaType="com.hxts.pojo.CheckGroup">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="code" property="code"/>
+            <result column="helpCode" property="helpCode"/>
+            <result column="sex" property="sex"/>
+            <result column="remark" property="remark"/>
+            <result column="attention" property="attention"/>
         </collection>
     </resultMap>
 
@@ -54,11 +56,12 @@
         select * from t_setmeal
     </select>
 
-    <select id="findById" resultType="com.hxts.pojo.Setmeal">
-        select * from t_setmeal  where id=#{id}
+    <select id="findById" resultMap="baseResultMap">
         select t_setmeal.*, t_checkgroup.*
-        from t_setmeal
-                 left join t_setmeal_checkgroup on t_setmeal.id= t_setmeal_checkgroup.setmeal_id
-                 join t_checkgroup on t_setmeal_checkgroup.setmeal_id=t_checkgroup.id
+        from t_setmeal,t_setmeal_checkgroup, t_checkgroup
+        where t_setmeal.id=#{id}
+        and t_setmeal.id = t_setmeal_checkgroup.setmeal_id
+        and t_setmeal_checkgroup.checkgroup_id = t_checkgroup.id
     </select>
+
 </mapper>
