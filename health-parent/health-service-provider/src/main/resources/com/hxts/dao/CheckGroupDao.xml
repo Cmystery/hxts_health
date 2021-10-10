@@ -69,4 +69,11 @@
     <select id="findAll" resultType="com.hxts.pojo.CheckGroup">
         select * from t_checkgroup
     </select>
+
+    <select id="selectCheckItemById" parameterType="int" resultType="com.hxts.pojo.CheckItem">
+        select * from t_checkitem
+
+            where code = #{queryString} or name = #{queryString}
+
+    </select>
 </mapper>
