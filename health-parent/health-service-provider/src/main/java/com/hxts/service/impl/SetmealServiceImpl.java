@@ -57,7 +57,6 @@ public class SetmealServiceImpl implements SetmealService {
     @Override
     public Setmeal findById(int id) {
         Setmeal setmeal = setmealDao.findById(id);
-        //setmeal.setCheckGroups();
         return setmeal;
     }
 

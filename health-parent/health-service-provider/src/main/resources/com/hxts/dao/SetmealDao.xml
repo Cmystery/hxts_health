@@ -3,23 +3,36 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hxts.dao.SetmealDao" >
 
-    <resultMap type="com.itheima.pojo.CheckGroup" id="baseResultMap">
+    <resultMap type="com.hxts.pojo.Setmeal" id="baseResultMap">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="code" property="code"/>
         <result column="helpCode" property="helpCode"/>
         <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
         <result column="remark" property="remark"/>
         <result column="attention" property="attention"/>
-    </resultMap>
-    <resultMap type="com.itheima.pojo.CheckGroup"
-               id="findByIdResultMap"
-               extends="baseResultMap">
-        <collection property="checkItems"
-                    javaType="ArrayList"
-                    ofType="com.itheima.pojo.CheckItem"
-                    column="id"
-                    select="com.itheima.dao.CheckItemDao.findCheckItemById">
+        <result column="img" property="img"/>
+        <collection property="checkGroups" ofType="com.hxts.pojo.CheckGroup">
+            <id column="checkgroup_id" property="id"/>
+            <result column="checkgroup_name" property="name"/>
+            <result column="checkgroup_code" property="code"/>
+            <result column="checkgroup_helpCode" property="helpCode"/>
+            <result column="checkgroup_sex" property="sex"/>
+            <result column="checkgroup_remark" property="remark"/>
+            <result column="checkgroup_attention" property="attention"/>
+            <collection property="checkItems" ofType="com.hxts.pojo.CheckItem">
+                <id column="checkitem_id" property="id" />
+                <result column="checkitem_code" property="code" />
+                <result column="checkitem_name" property="name" />
+                <result column="checkitem_sex" property="sex" />
+                <result column="checkitem_age" property="age" />
+                <result column="checkitem_price" property="price" />
+                <result column="checkitem_type" property="type" />
+                <result column="checkitem_attention" property="attention" />
+                <result column="checkitem_remark" property="remark" />
+            </collection>
         </collection>
     </resultMap>
 
@@ -54,11 +67,20 @@
         select * from t_setmeal
     </select>
 
-    <select id="findById" resultType="com.hxts.pojo.Setmeal">
-        select * from t_setmeal  where id=#{id}
-        select t_setmeal.*, t_checkgroup.*
+    <select id="findById" resultMap="baseResultMap">
+        select t_setmeal.*,
+               t_checkgroup.id checkgroup_id,t_checkgroup.name checkgroup_name,
+               t_checkgroup.code checkgroup_code,t_checkgroup.helpCode checkgroup_helpCode,
+               t_checkgroup.sex checkgroup_sex,t_checkgroup.remark checkgroup_remark,
+               t_checkgroup.attention checkgroup_attention,
+               t_checkitem.id checkitem_id,t_checkitem.code checkitem_code,t_checkitem.name checkitem_name,
+               t_checkitem.sex checkitem_sex,t_checkitem.age checkitem_age,t_checkitem.price checkitem_price,
+               t_checkitem.type checkitem_type,t_checkitem.attention checkitem_attention,t_checkitem.remark checkitem_remark
         from t_setmeal
                  left join t_setmeal_checkgroup on t_setmeal.id= t_setmeal_checkgroup.setmeal_id
-                 join t_checkgroup on t_setmeal_checkgroup.setmeal_id=t_checkgroup.id
+                 left join t_checkgroup on t_setmeal_checkgroup.checkgroup_id=t_checkgroup.id
+                 left join t_checkgroup_checkitem on t_checkgroup.id = t_checkgroup_checkitem.checkgroup_id
+                 left join t_checkitem on t_checkgroup_checkitem.checkitem_id = t_checkitem.id
+        where t_setmeal.id = #{id}
     </select>
 </mapper>
