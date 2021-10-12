@@ -23,7 +23,7 @@ public class SMSUtils {
 	 * @throws ClientException
 	 */
 	public static void sendShortMessage(String templateCode,String phoneNumbers,String param) throws ClientException{
-		// 设置超时时间-可自行调整
+	/*	// 设置超时时间-可自行调整
 		System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
 		System.setProperty("sun.net.client.defaultReadTimeout", "10000");
 		// 初始化ascClient需要的几个参数
@@ -58,6 +58,6 @@ public class SMSUtils {
 		if (sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK")) {
 			// 请求成功
 			System.out.println("请求成功");
-		}
+		}*/
 	}
 }
