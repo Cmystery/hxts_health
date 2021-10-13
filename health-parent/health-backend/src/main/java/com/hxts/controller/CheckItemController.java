@@ -7,6 +7,7 @@ import com.hxts.entity.QueryPageBean;
 import com.hxts.entity.Result;
 import com.hxts.pojo.CheckItem;
 import com.hxts.service.CheckItemService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +45,8 @@ public class CheckItemController {
      * @param queryPageBean 查询封装
      * @return
      */
+    //分页查询
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")//权限校验
     @RequestMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult pageResult = checkItemService.pageQuery(
